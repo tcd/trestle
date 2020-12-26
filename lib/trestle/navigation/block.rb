@@ -3,6 +3,7 @@ module Trestle
     class Block
       attr_reader :block, :admin
 
+      # @return [void]
       def initialize(admin=nil, &block)
         @admin = admin
         @block = block
@@ -20,8 +21,9 @@ module Trestle
         attr_reader :items
 
         def initialize(admin=nil, context=nil)
-          @admin, @context = admin, context
-          @items = []
+          @admin   = admin
+          @context = context
+          @items   = []
         end
 
         def default_path
@@ -53,6 +55,7 @@ module Trestle
           @current_group = nil
         end
       end
+
     end
   end
 end

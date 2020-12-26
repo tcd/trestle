@@ -1,24 +1,28 @@
 module Trestle
   class AdminController < ApplicationController
-    def index
-    end
+
+    def index; end
 
     class << self
       attr_reader :admin
 
-    private
+      private
+
       def local_prefixes
         return admin.view_path_prefixes if admin
         [controller_path.sub(/\/$/, "")]
       end
+
     end
 
     def admin
       @_admin ||= self.class.admin.new(self)
     end
-    helper_method :admin
 
-  protected
+    helper_method(:admin)
+
+    protected
+
     def breadcrumbs
       @_breadcrumbs ||= admin.breadcrumbs.dup
     end
@@ -29,5 +33,6 @@ module Trestle
         message: admin.t("flash.#{type}.message", default: message)
       }
     end
+
   end
 end

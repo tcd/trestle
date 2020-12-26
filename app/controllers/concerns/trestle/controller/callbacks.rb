@@ -1,6 +1,7 @@
 module Trestle
   module Controller
     module Callbacks
+
       extend ActiveSupport::Concern
 
       included do
@@ -16,6 +17,7 @@ module Trestle
           around_action(action.options, &action.block)
         end
       end
+
     end
   end
 end

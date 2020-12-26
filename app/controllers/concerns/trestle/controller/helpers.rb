@@ -1,6 +1,7 @@
 module Trestle
   module Controller
     module Helpers
+
       extend ActiveSupport::Concern
 
       included do
@@ -8,11 +9,12 @@ module Trestle
         self.helpers_path += Rails.application.helpers_paths
 
         # Add helpers declared from configuration as blocks
-        helper Trestle.config.helper_module
+        helper(Trestle.config.helper_module)
 
         # Add helpers declared from configuration as module references
-        helper *Trestle.config.helpers
+        helper(*Trestle.config.helpers)
       end
+
     end
   end
 end

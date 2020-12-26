@@ -1,14 +1,16 @@
 module Trestle
   module Controller
     module Toolbars
+
       extend ActiveSupport::Concern
 
       included do
-        helper_method :toolbars
-        helper_method :toolbar
+        helper_method(:toolbars)
+        helper_method(:toolbar)
       end
 
-    protected
+      protected
+
       def toolbars
         @_toolbars ||= {}
       end
@@ -25,6 +27,7 @@ module Trestle
       def default_toolbar_builder
         Toolbar::Builder
       end
+
     end
   end
 end

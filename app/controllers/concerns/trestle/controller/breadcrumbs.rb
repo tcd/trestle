@@ -1,6 +1,7 @@
 module Trestle
   module Controller
     module Breadcrumbs
+
       extend ActiveSupport::Concern
 
       included do
@@ -8,7 +9,8 @@ module Trestle
         helper_method :breadcrumb
       end
 
-    protected
+      protected
+
       def breadcrumbs
         @_breadcrumbs ||= Breadcrumb::Trail.new(Trestle.config.root_breadcrumbs)
       end
@@ -16,6 +18,7 @@ module Trestle
       def breadcrumb(label, path=nil)
         breadcrumbs.append(label, path)
       end
+
     end
   end
 end

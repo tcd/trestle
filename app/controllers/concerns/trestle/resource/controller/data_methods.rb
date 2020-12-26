@@ -2,18 +2,20 @@ module Trestle
   class Resource
     module Controller
       module DataMethods
+
         extend ActiveSupport::Concern
 
         included do
           attr_accessor :instance, :collection
-          helper_method :instance, :collection
+          helper_method(:instance, :collection)
 
-          before_action :load_collection, only: [:index]
-          before_action :load_instance, only: [:show, :edit, :update, :destroy]
-          before_action :build_instance, only: [:new, :create]
+          before_action(:load_collection, only: [:index])
+          before_action(:load_instance,   only: [:show, :edit, :update, :destroy])
+          before_action(:build_instance,  only: [:new, :create])
         end
 
-      protected
+        protected
+
         def load_instance
           self.instance = admin.find_instance(params)
         end
@@ -46,6 +48,7 @@ module Trestle
             {}
           end
         end
+
       end
     end
   end

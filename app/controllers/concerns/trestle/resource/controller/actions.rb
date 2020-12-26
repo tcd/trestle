@@ -2,6 +2,7 @@ module Trestle
   class Resource
     module Controller
       module Actions
+
         def index
           respond_to do |format|
             format.html
@@ -127,6 +128,7 @@ module Trestle
             yield format if block_given?
           end
         end
+
       end
     end
   end
