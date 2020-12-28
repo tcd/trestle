@@ -1,5 +1,6 @@
 module Trestle
   module AvatarHelper
+
     def avatar(options={})
       fallback = options.delete(:fallback) if options[:fallback]
 
@@ -17,5 +18,6 @@ module Trestle
 
       image_tag(url)
     end
+
   end
 end

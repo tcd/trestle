@@ -1,5 +1,6 @@
 module Trestle
   module CardHelper
+
     def card(options={}, &block)
       content_tag(:div, options.slice(:id, :data).merge(class: ["card", options[:class]].compact)) do
         safe_join([
@@ -19,5 +20,6 @@ module Trestle
       ActiveSupport::Deprecation.warn("The well helper is deprecated and will be removed in future versions of Trestle. Please use the card helper instead.")
       card(options, &block)
     end
+
   end
 end
