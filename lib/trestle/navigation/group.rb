@@ -3,11 +3,13 @@ module Trestle
     class Group
       attr_reader :name, :options
 
+      # @return [void]
       def initialize(name, options={})
-        @name = name
+        @name    = name
         @options = options
       end
 
+      # @return [Boolean]
       def ==(other)
         other.is_a?(self.class) && name == other.name
       end

@@ -7,8 +7,8 @@ module Trestle
 
     include AdapterMethods
 
-    RESOURCE_ACTIONS = [:index, :show, :new, :create, :edit, :update, :destroy]
-    READONLY_ACTIONS = [:index, :show]
+    RESOURCE_ACTIONS = [:index, :show, :new, :create, :edit, :update, :destroy].freeze()
+    READONLY_ACTIONS = [:index, :show].freeze()
 
     class_attribute :decorator
 
@@ -56,14 +56,17 @@ module Trestle
 
     class << self
       # Deprecated: use instance method instead
+      # @deprecated use {Trestle::Resource#prepare_collection} instead
       def prepare_collection(params, options={})
         Collection.new(self, options).prepare(params)
       end
 
+      # @return [Trestle::Scopes]
       def scopes
         @scopes ||= Scopes.new
       end
 
+      # @return [Hash]
       def column_sorts
         @column_sorts ||= {}
       end
@@ -84,6 +87,7 @@ module Trestle
         @model_name ||= Trestle::ModelName.new(model)
       end
 
+      # @return [String]
       def default_human_admin_name
         model_name.plural
       end
@@ -92,18 +96,24 @@ module Trestle
         @actions ||= (readonly? ? READONLY_ACTIONS : RESOURCE_ACTIONS).dup
       end
 
+      # @return [Symbol]
       def root_action
         singular? ? :show : :index
       end
 
+      # @return [Boolean]
       def readonly?
         options[:readonly]
       end
 
+      # @return [Boolean]
       def singular?
         options[:singular]
       end
 
+      # @param key [String]
+      # @param options [Hash]
+      # @return [String]
       def translate(key, options={})
         super(key, options.merge({
           model_name:            model_name.titleize,
@@ -111,15 +121,29 @@ module Trestle
           pluralized_model_name: model_name.plural.titleize
         }))
       end
+
+      # @!method t(key, options={})
+      #   @param key [String]
+      #   @param message [Hash]
+      #   @return [String]
       alias t translate
 
+      # @!parse
+      #   # (see #translate)
+      #   def t(key, options={}); end
+
+      # @param instance [Object]
+      # @param options [Hash]
+      #
+      # @return [Doc::Unknown]
       def instance_path(instance, options={})
-        action = options.fetch(:action) { :show }
+        action  = options.fetch(:action) { :show }
         options = options.merge(id: to_param(instance)) unless singular?
 
         path(action, options)
       end
 
+      # @return [Doc::Unknown]
       def routes
         admin = self
 
@@ -132,7 +156,7 @@ module Trestle
           except:     (RESOURCE_ACTIONS - actions)
         }
 
-        Proc.new do
+        proc do
           public_send(resource_method, resource_name, resource_options) do
             admin.additional_routes.each do |block|
               instance_exec(&block)
@@ -141,27 +165,37 @@ module Trestle
         end
       end
 
+      # @return [Hash]
       def return_locations
         @return_locations ||= {}
       end
 
+      # @param &block [Proc]
+      # @return [Doc::Unknown]
       def build(&block)
         Resource::Builder.build(self, &block)
       end
 
+      # @raise [NotImplementedError]
+      # @return [void]
       def validate!
         if singular? && !adapter_methods.method_defined?(:find_instance)
           raise NotImplementedError, "Singular resources must define an instance block."
         end
       end
 
-    private
+      private
+
+      # @raise [NameError]
+      #
+      # @return [Doc::Unknown]
       def infer_model_class
         scope = respond_to?(:module_parent) ? module_parent : parent
         scope.const_get(admin_name.classify)
       rescue NameError
         raise NameError, "Unable to find model #{admin_name.classify}. Specify a different model using Trestle.resource(:#{admin_name}, model: MyModel)"
       end
+
     end
   end
 end

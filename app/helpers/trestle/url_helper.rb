@@ -1,12 +1,14 @@
 module Trestle
   module UrlHelper
-    DIALOG_ACTIONS = [:new, :show, :edit]
+    # @return [Array<Symbol>]
+    DIALOG_ACTIONS = [:new, :show, :edit].freeze()
 
     def admin_link_to(content, instance_or_url=nil, options={}, &block)
       # Block given - ignore content parameter and capture content from block
       if block_given?
-        instance_or_url, options = content, instance_or_url || {}
-        content = capture(&block)
+        instance_or_url = content
+        options         = instance_or_url || {}
+        content         = capture(&block)
       end
 
       if instance_or_url.is_a?(String)

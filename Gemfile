@@ -9,9 +9,9 @@ group :test do
 
   gem 'capybara'
   gem 'capybara-selenium'
+  gem 'puma'
   gem 'selenium-webdriver'
   gem 'webdrivers'
-  gem 'puma'
 end
 
 gem 'haml'

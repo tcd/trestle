@@ -1,21 +1,37 @@
 module Trestle
   class Table
     class Column
-      attr_reader :field, :options, :block
 
+      # @return [Symbol]
+      attr_reader :field
+
+      # @return [Hash]
+      attr_reader :options
+
+      # @return [Proc]
+      attr_reader :block
+
+      # @param field [Symbol]
+      # @param options [Hash]
+      # @param &block [Proc]
+      #
+      # @return [void]
       def initialize(field, options={}, &block)
-        @field, @options = field, options
-        @block = block if block_given?
+        @field   = field
+        @options = options
+        @block   = block if block_given?
       end
 
       def renderer(table:, template:)
         Renderer.new(self, table: table, template: template)
       end
 
+      # @return [Boolean]
       def sortable?
-        options[:sort] != false && (!@block || options.has_key?(:sort))
+        options[:sort] != false && (!@block || options.key?(:sort))
       end
 
+      # @return [Doc::Unknown]
       def sort_field
         if options[:sort].is_a?(Hash)
           options[:sort][:field] || field
@@ -24,15 +40,26 @@ module Trestle
         end
       end
 
+      # @return [Doc::Unknown]
       def sort_options
         options[:sort].is_a?(Hash) ? options[:sort] : {}
       end
 
       class Renderer
-        delegate :options, to: :@column
 
+        # @!method options
+        #   @see Column#options
+        delegate(:options, to: :@column)
+
+        # @param column [Column]
+        # @param table [Table]
+        # @param template [Doc::Unknown]
+        #
+        # @return [void]
         def initialize(column, table:, template:)
-          @column, @table, @template = column, table, template
+          @column   = column
+          @table    = table
+          @template = template
         end
 
         def render(instance)

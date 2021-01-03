@@ -4,12 +4,17 @@ module Trestle
     require_relative "navigation/item"
     require_relative "navigation/group"
 
+    # @return [Array]
     attr_reader :items
 
+    # @param items [Array]
+    #
+    # @return [void]
     def initialize(items)
       @items = items
     end
 
+    # @return [Hash]
     def by_group
       sorted_groups = stable_sort(items.group_by { |item| groups[item.group.id] })
       sorted_items = sorted_groups.map { |group, items| [group, stable_sort(items)] }
@@ -34,7 +39,8 @@ module Trestle
       })
     end
 
-  private
+    private
+
     def stable_sort(items)
       items.sort_by.with_index { |item, i| [item, i] }
     end

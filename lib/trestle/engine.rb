@@ -2,7 +2,9 @@ require "sprockets/railtie"
 
 module Trestle
   class Engine < ::Rails::Engine
-    isolate_namespace Trestle
+
+    isolate_namespace(Trestle)
+
     self.routes.default_scope = {}
 
     # Application assets
@@ -16,14 +18,22 @@ module Trestle
     initializer "trestle.automount" do |app|
       if Trestle.config.automount
         app.routes.prepend do
-          mount Trestle::Engine => Trestle.config.path
+          mount(Trestle::Engine => Trestle.config.path)
         end
       end
     end
 
     initializer "trestle.draper" do |app|
       if defined?(Draper)
-        Draper::CollectionDecorator.delegate :current_page, :total_pages, :limit_value, :entry_name, :total_count, :offset_value, :last_page?
+        Draper::CollectionDecorator.delegate(
+          :current_page,
+          :total_pages,
+          :limit_value,
+          :entry_name,
+          :total_count,
+          :offset_value,
+          :last_page?,
+        )
       end
     end
 
@@ -49,8 +59,10 @@ module Trestle
       reloader.install(app) unless app.config.eager_load
     end
 
+    # @return [void]
     def reset_helpers!
       @helpers = nil
     end
+
   end
 end

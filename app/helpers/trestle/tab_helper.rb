@@ -1,5 +1,6 @@
 module Trestle
   module TabHelper
+    # @return [Hash]
     def tabs
       @_trestle_tabs ||= {}
     end
@@ -7,13 +8,14 @@ module Trestle
     def tab(name, options={})
       tabs[name] = tab = Tab.new(name, options)
 
+      # FIXME: This isn't clear whatsoever
       content_tag(:div, id: tab.id(("modal" if dialog_request?)), class: ["tab-pane", ('active' if name == tabs.keys.first)], role: "tabpanel") do
         if block_given?
           yield
         elsif options[:partial]
-          render partial: options[:partial]
+          render(partial: options[:partial])
         else
-          render partial: name.to_s
+          render(partial: name.to_s)
         end
       end
     end

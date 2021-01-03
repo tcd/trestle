@@ -1,5 +1,6 @@
 module Trestle
   module FormatHelper
+
     def format_value(value, options={})
       if options.key?(:format)
         format_value_from_options(value, options)
@@ -50,5 +51,6 @@ module Trestle
         value
       end
     end
+
   end
 end

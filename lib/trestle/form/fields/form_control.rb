@@ -2,6 +2,7 @@ module Trestle
   class Form
     module Fields
       class FormControl < Field
+
         def render
           form_group do
             input_group do
@@ -37,11 +38,12 @@ module Trestle
         def normalize_options!
           super
 
-          @prepend = { content: options.delete(:prepend),  wrap: true }  if options[:prepend]
+          @prepend = { content: options.delete(:prepend),  wrap: true  } if options[:prepend]
           @prepend = { content: options.delete(:prepend!), wrap: false } if options[:prepend!]
-          @append  = { content: options.delete(:append),   wrap: true }  if options[:append]
+          @append  = { content: options.delete(:append),   wrap: true  } if options[:append]
           @append  = { content: options.delete(:append!),  wrap: false } if options[:append!]
         end
+
       end
     end
   end

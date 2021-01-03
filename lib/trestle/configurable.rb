@@ -2,13 +2,14 @@ module Trestle
   module Configurable
     extend ActiveSupport::Concern
 
-    delegate :defaults, to: :class
+    delegate(:defaults, to: :class)
 
     def configure(&block)
       yield self if block_given?
       self
     end
 
+    # @param name [Symbol]
     def fetch(name)
       name = name.to_sym
 
@@ -20,10 +21,13 @@ module Trestle
       }
     end
 
+    # @param name [Symbol]
+    # @param value [Object]
     def assign(name, value)
       options[name.to_sym] = value
     end
 
+    # @return [Hash]
     def options
       @options ||= {}
     end
@@ -34,15 +38,20 @@ module Trestle
       end
     end
 
+    # @return [String]
     def inspect
-      "#<#{self.class.name || "Anonymous(Trestle::Configurable)"}>"
+      "#<#{self.class.name || 'Anonymous(Trestle::Configurable)'}>"
     end
 
     module ClassMethods
+
       def defaults
         @defaults ||= {}
       end
 
+      # @param name [Symbol]
+      # @param default [Doc::Unknown]
+      # @param Opts [Hash]
       def option(name, default=nil, opts={})
         name = name.to_sym
 
@@ -72,14 +81,27 @@ module Trestle
           ActiveSupport::Deprecation.warn(message)
         end
       end
+
     end
 
     module Open
-    protected
-      def respond_to_missing(name, include_all=false)
+
+      protected
+
+      # @return [Boolean]
+      def respond_to_missing(_name, _include_all=false)
         true
       end
 
+      # @return [Boolean]
+      def respond_to_missing?(*_args)
+        return true
+      end
+
+      # @param name [String]
+      # @param *args [Doc::Unknown]
+      # @param &block [Proc]
+      # @return [Doc::Unknown]
       def method_missing(name, *args, &block)
         if name =~ /(.*)\=$/
           key, value = $1, args.first
@@ -88,6 +110,8 @@ module Trestle
           options[name.to_sym] ||= self.class.new
         end
       end
+
     end
+
   end
 end

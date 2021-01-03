@@ -9,13 +9,13 @@ module Trestle
     #           :date_format - I18n date format to use for the date (default: :trestle_date).
     #           :time_format - I18n time format to use for the time (default: :trestle_time).
     #
-    # Examples
-    #
+    # @example
     #   <%= timestamp(article.created_at) %>
     #
+    # @example
     #   <%= timestamp(Time.current, class: "timestamp-inline", precision: :seconds) %>
     #
-    # Returns the HTML representation of the given Time.
+    # @return [String] The HTML representation of the given Time.
     def timestamp(time, options={})
       return unless time
 
@@ -39,13 +39,13 @@ module Trestle
     #           :class  - Additional HTML classes to add to the <time> tag.
     #           :format - I18n date format to use (default: :trestle_calendar).
     #
-    # Examples
-    #
+    # @example
     #   <%= datestamp(Date.current) %>
     #
+    # @example
     #   <%= datestamp(article.created_at, format: :trestle_date, class: "custom-datestamp") %>
     #
-    # Returns the HTML representation of the given Date.
+    # @return [String] The HTML representation of the given Date.
     def datestamp(date, options={})
       return unless date
 

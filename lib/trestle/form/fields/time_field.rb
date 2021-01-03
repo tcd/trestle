@@ -1,6 +1,8 @@
 class Trestle::Form::Fields::TimeField < Trestle::Form::Fields::FormControl
+
   include Trestle::Form::Fields::DatePicker
 
+    # @return [Doc::HTML]
   def field
     builder.raw_time_field(name, options)
   end

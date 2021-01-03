@@ -4,15 +4,22 @@ module Trestle
       class CollectionCheckBoxes < Field
         include CheckBoxHelpers
 
-        attr_reader :collection, :value_method, :text_method, :html_options
+        attr_reader :collection
+        attr_reader :value_method
+        attr_reader :text_method
+        attr_reader :html_options
 
+        # @return [void]
         def initialize(builder, template, name, collection, value_method, text_method, options={}, html_options={}, &block)
           super(builder, template, name, options, &block)
 
-          @collection, @value_method, @text_method = collection, value_method, text_method
+          @collection   = collection
+          @value_method = value_method
+          @text_method  = text_method
           @html_options = default_html_options.merge(html_options)
         end
 
+        # @return [Doc::HTML]
         def field
           builder.raw_collection_check_boxes(name, collection, value_method, text_method, options, html_options) do |b|
             if block
@@ -29,6 +36,7 @@ module Trestle
           super.merge(inline: true)
         end
 
+        # @return [Trestle::Options]
         def default_html_options
           Trestle::Options.new
         end
@@ -37,4 +45,7 @@ module Trestle
   end
 end
 
-Trestle::Form::Builder.register(:collection_check_boxes, Trestle::Form::Fields::CollectionCheckBoxes)
+Trestle::Form::Builder.register(
+  :collection_check_boxes,
+  Trestle::Form::Fields::CollectionCheckBoxes,
+)

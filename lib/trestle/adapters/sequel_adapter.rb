@@ -1,15 +1,16 @@
 begin
   require "sequel"
 rescue LoadError
-  $stderr.puts "You don't have sequel installed in your application. Please add it to your Gemfile and run bundle install"
+  warn("You don't have sequel installed in your application. Please add it to your Gemfile and run bundle install")
   raise
 end
 
-Sequel::Model.plugin :active_model
+Sequel::Model.plugin(:active_model)
 
 module Trestle
   module Adapters
     module SequelAdapter
+
       def collection(params={})
         model.dataset
       end
@@ -58,7 +59,8 @@ module Trestle
         end
       end
 
-    protected
+      protected
+
       def default_attributes
         model.db_schema.map do |column_name, column_attrs|
           if column_name.to_s.end_with?("_id") && (name = column_name.to_s.sub(/_id$/, '')) && (reflection = model.association_reflection(name.to_sym))
@@ -77,5 +79,6 @@ module Trestle
         model.respond_to?(:sti_key) && attribute.name.to_s == model.sti_key.to_s
       end
     end
+
   end
 end

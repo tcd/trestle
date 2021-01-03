@@ -6,6 +6,7 @@ module Trestle
 
         attr_reader :tag_value
 
+        # @return [void]
         def initialize(builder, template, name, tag_value, options={})
           super(builder, template, name, options)
 

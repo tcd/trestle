@@ -4,15 +4,37 @@ module Trestle
       class CollectionRadioButtons < Field
         include RadioButtonHelpers
 
-        attr_reader :collection, :value_method, :text_method, :html_options
+        attr_reader :collection
 
+        attr_reader :value_method
+
+        attr_reader :text_method
+
+        # @return [Trestle::Options]
+        attr_reader :html_options
+
+        # @param builder [Doc::Unknown]
+        # @param template [Doc::Unknown]
+        # @param name [Doc::Unknown]
+        # @param collection [Doc::Unknown]
+        # @param value_method [Doc::Unknown]
+        # @param text_method [Doc::Unknown]
+        # @param options [Hash]
+        # @param html_options [Hash]
+        # @option html_options [Boolean] :inline
+        # @param &block [Proc]
+        #
+        # @return [void]
         def initialize(builder, template, name, collection, value_method, text_method, options={}, html_options={}, &block)
           super(builder, template, name, options, &block)
 
-          @collection, @value_method, @text_method = collection, value_method, text_method
+          @collection   = collection
+          @value_method = value_method
+          @text_method  = text_method
           @html_options = default_html_options.merge(html_options)
         end
 
+        # @return [Doc::HTML]
         def field
           builder.raw_collection_radio_buttons(name, collection, value_method, text_method, options, html_options) do |b|
             if block
@@ -25,10 +47,11 @@ module Trestle
           end
         end
 
-        def defaults
+        def defaults()
           super.merge(inline: true)
         end
 
+        # @return [Trestle::Options]
         def default_html_options
           Trestle::Options.new
         end

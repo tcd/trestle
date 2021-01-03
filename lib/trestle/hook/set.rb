@@ -3,6 +3,7 @@ module Trestle
     class Set
       attr_reader :hooks
 
+      # @return [void]
       def initialize
         @hooks = {}
       end

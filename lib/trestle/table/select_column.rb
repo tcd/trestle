@@ -3,6 +3,7 @@ module Trestle
     class SelectColumn
       attr_reader :options
 
+      # @return [void]
       def initialize(options={})
         @options = options
       end

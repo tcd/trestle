@@ -1,7 +1,9 @@
 module Trestle
   class Navigation
     class Block
-      attr_reader :block, :admin
+
+      attr_reader :block
+      attr_reader :admin
 
       # @return [void]
       def initialize(admin=nil, &block)
@@ -20,6 +22,7 @@ module Trestle
 
         attr_reader :items
 
+        # @return [void]
         def initialize(admin=nil, context=nil)
           @admin   = admin
           @context = context

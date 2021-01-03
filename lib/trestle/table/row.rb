@@ -1,13 +1,21 @@
 module Trestle
   class Table
     class Row
-      attr_reader :options, :block
 
+      attr_reader :options
+
+      attr_reader :block
+
+      # @param options [Hash]
+      # @param &block [Proc]
+      #
+      # @return [void]
       def initialize(options={}, &block)
         @options = options
-        @block = block if block_given?
+        @block   = block if block_given?
       end
 
+      # @return [Trestle::Table::Row::Renderer]
       def renderer(table:, template:)
         Renderer.new(self, table: table, template: template)
       end
@@ -18,9 +26,7 @@ module Trestle
         end
 
         def columns
-          @table.columns.map { |column|
-            column.renderer(table: @table, template: @template)
-          }.select(&:render?)
+          @table.columns.map{ |c| c.renderer(table: @table, template: @template) }.select(&:render?)
         end
 
         def render(instance)
@@ -43,10 +49,12 @@ module Trestle
           options
         end
 
-      protected
+        protected
+
         def admin_url_for(instance)
           @template.admin_url_for(instance, admin: @table.admin)
         end
+
       end
     end
   end

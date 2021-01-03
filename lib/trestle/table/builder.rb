@@ -1,8 +1,10 @@
 module Trestle
   class Table
     class Builder < Trestle::Builder
-      target :table
 
+      target(:table)
+
+      # @return [void]
       def initialize(options={})
         @table = Table.new(options)
         @output_buffer = ActionView::OutputBuffer.new
@@ -12,10 +14,12 @@ module Trestle
         table.row = Row.new(options, &block)
       end
 
+      # @return [void]
       def selectable_column(options={})
         table.columns << SelectColumn.new(options)
       end
 
+      # @return [void]
       def column(field, proc=nil, options={}, &block)
         if proc.is_a?(Hash)
           options = proc
@@ -25,9 +29,11 @@ module Trestle
         table.columns << Column.new(field, options, &(proc || block))
       end
 
+      # @return [void]
       def actions(options={}, &block)
         table.columns << ActionsColumn.new(options, &block)
       end
+
     end
   end
 end

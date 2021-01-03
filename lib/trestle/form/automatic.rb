@@ -1,6 +1,7 @@
 module Trestle
   class Form
     class Automatic < Form
+      # @return [void]
       def initialize(admin, options={})
         super(options) do |instance|
           admin.default_form_attributes.each do |attribute|
@@ -13,7 +14,7 @@ module Trestle
               when :association
                 if attribute.polymorphic?
                   static_field attribute.name do
-                    if associated_instance = instance.public_send(attribute.association_name)
+                    if (associated_instance = instance.public_send(attribute.association_name))
                       admin_link_to format_value(associated_instance), associated_instance
                     else
                       content_tag(:span, I18n.t("admin.format.blank"), class: "blank")

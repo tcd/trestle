@@ -11,6 +11,8 @@ module Trestle
     attr_writer :row
     attr_accessor :options
 
+    # @param options [Hash]
+    # @return [void]
     def initialize(options={})
       @options = options
       @columns = []
@@ -26,29 +28,36 @@ module Trestle
       Trestle.lookup(options[:admin]) if options.key?(:admin)
     end
 
+    # @return [Boolean]
     def sortable?
       options[:sortable] == true
     end
 
+    # @return [Boolean]
     def autolink?
       options[:autolink] != false
     end
 
+    # @return [Boolean]
     def header?
       options[:header] != false
     end
 
+    # @param template [Doc::Unknown]
+    # @return [Trestle::Table::Renderer]
     def renderer(template)
       Renderer.new(self, template)
     end
 
+    # @return [Trestle::Table::Row]
     def row
       @row || Row.new
     end
 
     class Renderer
-      delegate :options, :header?, to: :@table
+      delegate(:options, :header?, to: :@table)
 
+      # @return [void]
       def initialize(table, template)
         @table, @template = table, template
       end
@@ -65,6 +74,7 @@ module Trestle
         options[:id]
       end
 
+      # @return [Array<String>]
       def classes
         ["trestle-table", options[:class]].compact
       end

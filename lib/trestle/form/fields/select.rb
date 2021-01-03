@@ -4,6 +4,14 @@ module Trestle
       class Select < Field
         attr_reader :choices, :html_options
 
+        # @param builder [Doc::Unknown]
+        # @param template [Doc::Unknown]
+        # @param name [Doc::Unknown]
+        # @param choices [Doc::Unknown]
+        # @param options [Hash]
+        # @param html_options [Hash]
+        # @param &block [Proc]
+        # @return [void]
         def initialize(builder, template, name, choices=nil, options={}, html_options={}, &block)
           super(builder, template, name, options, &block)
 
@@ -13,10 +21,12 @@ module Trestle
           @html_options = default_html_options.merge(html_options)
         end
 
+        # @return [Doc::HTML]
         def field
           builder.raw_select(name, choices, options, html_options, &block)
         end
 
+        # @return [Trestle::Options]
         def default_html_options
           Trestle::Options.new(class: ["form-control"], disabled: disabled? || readonly?, data: { enable_select2: true })
         end
@@ -31,6 +41,7 @@ module Trestle
           include Enumerable
           alias empty? none?
 
+          # @return [void]
           def initialize(choices)
             @choices = Array(choices)
           end
@@ -41,7 +52,8 @@ module Trestle
             end
           end
 
-        protected
+          protected
+
           def option_text_and_value(option)
             if !option.is_a?(String) && option.respond_to?(:first) && option.respond_to?(:last)
               option
@@ -51,6 +63,7 @@ module Trestle
               [option, option]
             end
           end
+
         end
       end
     end

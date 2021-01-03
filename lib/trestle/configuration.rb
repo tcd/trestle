@@ -2,7 +2,9 @@ module Trestle
   class Configuration
     include Configurable
 
-    ## Customization Options
+    # --------------------------------------------------------------------------
+    # Customization Options
+    # --------------------------------------------------------------------------
 
     # Page title shown in the main admin header and <title> tag
     option :site_title, -> { I18n.t("trestle.title", default: "Trestle") }
@@ -25,8 +27,9 @@ module Trestle
     # Theme stylesheet compilation (requires Sass support)
     option :theme, defined?(Sass) || defined?(SassC)
 
-
-    ## Mounting Options
+    # --------------------------------------------------------------------------
+    # Mounting Options
+    # --------------------------------------------------------------------------
 
     # Path at which to mount the Trestle admin
     option :path, "/admin"
@@ -34,8 +37,9 @@ module Trestle
     # Automatically mount the admin within the Rails application's routes
     option :automount, true
 
-
-    ## Navigation Options
+    # --------------------------------------------------------------------------
+    # Navigation Options
+    # --------------------------------------------------------------------------
 
     # Path to consider the application root (for title links and breadcrumbs)
     option :root, -> { Trestle.config.path }
@@ -54,8 +58,9 @@ module Trestle
       menus << Navigation::Block.new(&block)
     end
 
-
-    ## Extension Options
+    # --------------------------------------------------------------------------
+    # Extension Options
+    # --------------------------------------------------------------------------
 
     # [Internal] List of helper modules to include in all Trestle controllers
     option :helpers, []
@@ -106,20 +111,24 @@ module Trestle
     ]
 
     # [DEPRECATED] When to reload Trestle admin within a to_prepare block
+    # @deprecated When to reload Trestle admin within a to_prepare block
     deprecated_option :reload, "The config.reload option is deprecated. Admins are now always reloaded when config.to_prepare is called."
 
-
-    ## Debugging
+    # --------------------------------------------------------------------------
+    # Debugging
+    # --------------------------------------------------------------------------
 
     # Enable debugging of form errors
     option :debug_form_errors, Rails.env.development?
 
-
-    ## Callbacks
+    # --------------------------------------------------------------------------
+    # Callbacks
+    # --------------------------------------------------------------------------
 
     Action = Struct.new(:options, :block)
 
     # [Internal] List of global before actions
+    # @private
     option :before_actions, []
 
     # Register a global before action
@@ -128,6 +137,7 @@ module Trestle
     end
 
     # [Internal] List of global after actions
+    # @private
     option :after_actions, []
 
     # Register a global after action
@@ -136,6 +146,7 @@ module Trestle
     end
 
     # [Internal] List of global around actions
+    # @private
     option :around_actions, []
 
     # Register a global around action

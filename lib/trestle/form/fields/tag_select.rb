@@ -4,6 +4,8 @@ module Trestle
   class Form
     module Fields
       class TagSelect < Select
+
+        # @return [void]
         def initialize(builder, template, name, options={}, html_options={})
           super(builder, template, name, nil, options, html_options)
         end
@@ -11,6 +13,7 @@ module Trestle
         def default_html_options
           super.merge(multiple: true, class: ["tag-select"], data: { tags: true })
         end
+
       end
     end
   end

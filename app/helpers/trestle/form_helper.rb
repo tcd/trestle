@@ -1,12 +1,12 @@
 module Trestle
   module FormHelper
-    IDENTITY_FIELD_ERROR_PROC = Proc.new { |html_tag, instance| html_tag }
+
+    IDENTITY_FIELD_ERROR_PROC = proc { |html_tag, _instance| html_tag }
 
     def trestle_form_for(instance, options={}, &block)
       options[:builder] ||= Form::Builder
-      options[:as] ||= admin.parameter_name
-
-      options[:data] ||= {}
+      options[:as]      ||= admin.parameter_name
+      options[:data]    ||= {}
       options[:data].reverse_merge!(remote: true, type: :html, behavior: "trestle-form", turbolinks: false)
 
       form_for(instance, options) do |f|
@@ -43,5 +43,6 @@ module Trestle
     def render_sidebar_as_tab?
       dialog_request? && content_for?(:sidebar)
     end
+
   end
 end

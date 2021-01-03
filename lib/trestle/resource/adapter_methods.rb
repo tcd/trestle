@@ -1,6 +1,7 @@
 module Trestle
   class Resource
     module AdapterMethods
+
       extend ActiveSupport::Concern
 
       # Adapter instance bound to the current resource's context.
@@ -9,12 +10,13 @@ module Trestle
       end
 
       module ClassMethods
+
         # Declares a method that is handled by the admin's adapter class.
         def adapter_method(name)
-          delegate name, to: :adapter
+          delegate(name, to: :adapter)
 
           singleton_class.class_eval do
-            delegate name, to: :adapter
+            delegate(name, to: :adapter)
           end
         end
 
@@ -48,6 +50,8 @@ module Trestle
         end
 
         # Module container for admin-specific adapter methods.
+        #
+        # @return [Module]
         def adapter_methods
           @adapter_methods ||= Module.new
         end

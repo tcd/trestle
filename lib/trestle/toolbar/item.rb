@@ -1,10 +1,26 @@
 module Trestle
   class Toolbar
     class Item
-      attr_reader :label, :menu
 
-      delegate :admin_link_to, :button_tag, :content_tag, :safe_join, :icon, to: :@template
+      attr_reader :menu
 
+      attr_reader :label
+
+      delegate(
+        :admin_link_to,
+        :button_tag,
+        :content_tag,
+        :safe_join,
+        :icon,
+        to: :@template,
+      )
+
+      # @param template [Doc::Unknown]
+      # @param label [Doc::Unknown]
+      # @param options [Options]
+      # @param &block [Proc]
+      #
+      # @return [void]
       def initialize(template, label, options={}, &block)
         @template = template
         @label, @options, @block = label, options
@@ -16,10 +32,13 @@ module Trestle
         @style = options.delete(:style)
       end
 
+      # @param other [#to_s]
+      # @return [Boolean]
       def ==(other)
         to_s == other.to_s
       end
 
+      # @return [String]
       def to_s
         if menu.items.any?
           content_tag(:div, class: "btn-group", role: "group") do
@@ -59,10 +78,12 @@ module Trestle
         safe_join([icon, label].compact, " ")
       end
 
+      # @return [String]
       def button_style
         @style || "default"
       end
 
+      # @return [Array<String>]
       def button_style_classes
         ["btn", "btn-#{button_style}"]
       end
@@ -77,6 +98,7 @@ module Trestle
     class Link < Item
       attr_reader :instance_or_url
 
+      # @return [void]
       def initialize(template, label, instance_or_url={}, options={}, &block)
         if instance_or_url.is_a?(Hash)
           super(template, label, instance_or_url, &block)
@@ -114,5 +136,6 @@ module Trestle
         [menu.render_items]
       end
     end
+
   end
 end

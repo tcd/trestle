@@ -2,8 +2,11 @@ module Trestle
   class Form
     module Fields
       class TimeZoneSelect < Field
-        attr_reader :priority_zones, :html_options
 
+        attr_reader :priority_zones
+        attr_reader :html_options
+
+        # @return [void]
         def initialize(builder, template, name, priority_zones=nil, options={}, html_options={}, &block)
           super(builder, template, name, options, &block)
 
@@ -11,13 +14,16 @@ module Trestle
           @html_options = default_html_options.merge(html_options)
         end
 
+        # @return [Doc::HTML]
         def field
           builder.raw_time_zone_select(name, priority_zones, options, html_options, &block)
         end
 
+        # @return [Trestle::Options]
         def default_html_options
           Trestle::Options.new(class: ["form-control"], disabled: disabled? || readonly?, data: { enable_select2: true })
         end
+
       end
     end
   end

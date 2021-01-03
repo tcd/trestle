@@ -1,11 +1,18 @@
 module Trestle
   class Reloader
-    delegate :execute, :execute_if_updated, :updated?, to: :updater
 
+    delegate(:execute, :execute_if_updated, :updated?, to: :updater)
+
+    # @param files [Object]
+    # @param dirs [Object]
+    #
+    # @return [void]
     def initialize(files, dirs = {})
-      @files, @dirs = files, dirs
+      @files = files
+      @dirs  = dirs
     end
 
+    # @return [ActiveSupport::FileUpdateChecker]
     def updater
       @updater ||= ActiveSupport::FileUpdateChecker.new(@files, @dirs) do
         begin
@@ -25,14 +32,17 @@ module Trestle
       end
     end
 
+    # @return [void]
     def clear
       Trestle.admins = {}
     end
 
+    # @return [Array<String>]
     def load_paths
       Trestle.config.load_paths.map { |path| path.respond_to?(:call) ? path.call : path }.flatten.map(&:to_s)
     end
 
+    # @return [void]
     def install(app)
       reloader = self
 

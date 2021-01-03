@@ -1,10 +1,15 @@
 module Trestle
   class Table
     class Automatic < Table
+
+      # @param admin [Admin]
+      #
+      # @return [void]
       def initialize(admin)
         super(sortable: true, admin: admin)
       end
 
+      # @return [Array]
       def columns
         content_columns + [actions_column]
       end

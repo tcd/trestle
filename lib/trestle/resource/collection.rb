@@ -1,13 +1,30 @@
 module Trestle
   class Resource
     class Collection
-      delegate :collection, :paginate, :finalize_collection, :decorate_collection,
-               :scopes, :merge_scopes, :column_sorts, :sort, to: :@admin
+      delegate(
+        :collection,
+        :paginate,
+        :finalize_collection,
+        :decorate_collection,
+        :scopes,
+        :merge_scopes,
+        :column_sorts,
+        :sort,
+        to: :@admin
+      )
 
+      # @param admin [Admin]
+      # @param options [Hash]
+      #
+      # @return [void]
       def initialize(admin, options={})
-        @admin, @options = admin, options
+        @admin   = admin
+        @options = options
       end
 
+      # @param params [Doc::Unknown]
+      #
+      # @return [Doc::Unknown]
       def prepare(params)
         collection = collection(params)
         collection = apply_scopes(collection, params)  if scope?
@@ -18,27 +35,33 @@ module Trestle
         collection
       end
 
+      # @return [Boolean]
       def scope?
         @options[:scope] != false
       end
 
+      # @return [Boolean]
       def sort?
         @options[:sort] != false
       end
 
+      # @return [Boolean]
       def paginate?
         @options[:paginate] != false
       end
 
+      # @return [Boolean]
       def finalize?
         @options[:finalize] != false
       end
 
+      # @return [Boolean]
       def decorate?
         @options[:decorate] != false
       end
 
-    private
+      private
+
       def apply_scopes(collection, params)
         unscoped = collection(params)
 
@@ -57,7 +80,7 @@ module Trestle
         field = params[:sort].to_sym
         order = params[:order].to_s.downcase == "desc" ? :desc : :asc
 
-        if column_sorts.has_key?(field)
+        if column_sorts.key?(field)
           @admin.instance_exec(collection, order, &column_sorts[field])
         else
           sort(collection, field, order)

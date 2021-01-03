@@ -4,6 +4,7 @@ module Trestle
       class DatetimeSelect < Field
         attr_reader :html_options
 
+        # @return [void]
         def initialize(builder, template, name, options={}, html_options={}, &block)
           super(builder, template, name, options, &block)
 

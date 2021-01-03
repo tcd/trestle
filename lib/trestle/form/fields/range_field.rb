@@ -2,10 +2,13 @@ module Trestle
   class Form
     module Fields
       class RangeField < Field
+
+        # @return [Doc::HTML]
         def field
           builder.raw_range_field(name, options)
         end
 
+        # @return [Boolean]
         def custom?
           options[:custom] != false
         end
@@ -13,6 +16,7 @@ module Trestle
         def defaults
           custom? ? super.merge(class: ["custom-range"]) : super
         end
+
       end
     end
   end

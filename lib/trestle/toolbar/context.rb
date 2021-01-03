@@ -4,9 +4,11 @@ module Trestle
     class Context
       attr_reader :builder
 
+      # @return [void]
       def initialize(builder, enumerator, *args)
-        @builder, @enumerator = builder, enumerator
-        @args = args
+        @builder    = builder
+        @enumerator = enumerator
+        @args       = args
       end
 
       def group
@@ -20,7 +22,9 @@ module Trestle
         end
       end
 
-    private
+      private
+
+      # @return [Boolean]
       def respond_to_missing?(name, include_all=false)
         builder.respond_to?(name) || super
       end

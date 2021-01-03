@@ -95,19 +95,26 @@ end
 
 The following plugins are currently available:
 
-| Name | Description | Links |
-| --- | --- | --- |
-| *trestle-auth* | User authentication plugin | [GitHub](https://github.com/TrestleAdmin/trestle-auth) \| [RubyGems](https://rubygems.org/gems/trestle-auth) |
-| *trestle-search* | Search plugin | [GitHub](https://github.com/TrestleAdmin/trestle-search) \| [RubyGems](https://rubygems.org/gems/trestle-search) |
-| *trestle-tinymce* | [TinyMCE](https://www.tinymce.com/) (WYSIWYG editor) integration | [GitHub](https://github.com/TrestleAdmin/trestle-tinymce) \| [RubyGems](https://rubygems.org/gems/trestle-tinymce) |
-| *trestle-simplemde* | [SimpleMDE](https://simplemde.com/) (Markdown editor) integration | [GitHub](https://github.com/TrestleAdmin/trestle-simplemde) \| [RubyGems](https://rubygems.org/gems/trestle-simplemde) |
-| *trestle-sidekiq* | [Sidekiq](http://sidekiq.org/) integration | [GitHub](https://github.com/TrestleAdmin/trestle-sidekiq) \| [RubyGems](https://rubygems.org/gems/trestle-sidekiq) |
-| *trestle-active_storage* | [Active Storage](https://guides.rubyonrails.org/active_storage_overview.html) integration | [GitHub](https://github.com/richardvenneman/trestle-active_storage) \| [RubyGems](https://rubygems.org/gems/trestle-active_storage) |
-| *trestle-mobility* | [Mobility](https://github.com/shioyama/mobility) integration | [GitHub](https://github.com/richardvenneman/trestle-mobility) \| [RubyGems](https://rubygems.org/gems/trestle-mobility) |
-| *trestle-omniauth* | OmniAuth authentication plugin | [GitHub](https://github.com/airhorns/trestle-omniauth) \| [RubyGems](https://rubygems.org/gems/trestle-omniauth) |
-| *trestle-auth-otp* | 2FA/OTP user authentication | [GitHub](https://github.com/McRipper/trestle-auth-otp) \| [RubyGems](https://rubygems.org/gems/trestle-auth-otp) |
+|           Name           |                                        Description                                        |                                 Links                                                                                               |
+| ------------------------ | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| *trestle-auth*           | User authentication plugin                                                                | [![GitHubLogo]](https://github.com/TrestleAdmin/trestle-auth)              [![RubyGemsLogo]](https://rubygems.org/gems/trestle-auth)                        |
+| *trestle-search*         | Search plugin                                                                             | [![GitHubLogo]](https://github.com/TrestleAdmin/trestle-search)            [![RubyGemsLogo]](https://rubygems.org/gems/trestle-search)                    |
+| *trestle-tinymce*        | [TinyMCE](https://www.tinymce.com/) (WYSIWYG editor) integration                          | [![GitHubLogo]](https://github.com/TrestleAdmin/trestle-tinymce)           [![RubyGemsLogo]](https://rubygems.org/gems/trestle-tinymce)                  |
+| *trestle-simplemde*      | [SimpleMDE](https://simplemde.com/) (Markdown editor) integration                         | [![GitHubLogo]](https://github.com/TrestleAdmin/trestle-simplemde)         [![RubyGemsLogo]](https://rubygems.org/gems/trestle-simplemde)              |
+| *trestle-sidekiq*        | [Sidekiq](http://sidekiq.org/) integration                                                | [![GitHubLogo]](https://github.com/TrestleAdmin/trestle-sidekiq)           [![RubyGemsLogo]](https://rubygems.org/gems/trestle-sidekiq)                  |
+| *trestle-active_storage* | [Active Storage](https://guides.rubyonrails.org/active_storage_overview.html) integration | [![GitHubLogo]](https://github.com/richardvenneman/trestle-active_storage) [![RubyGemsLogo]](https://rubygems.org/gems/trestle-active_storage) |
+| *trestle-mobility*       | [Mobility](https://github.com/shioyama/mobility) integration                              | [![GitHubLogo]](https://github.com/richardvenneman/trestle-mobility)       [![RubyGemsLogo]](https://rubygems.org/gems/trestle-mobility)             |
+| *trestle-omniauth*       | OmniAuth authentication plugin                                                            | [![GitHubLogo]](https://github.com/airhorns/trestle-omniauth)              [![RubyGemsLogo]](https://rubygems.org/gems/trestle-omniauth)                    |
+| *trestle-auth-otp*       | 2FA/OTP user authentication                                                               | [![GitHubLogo]](https://github.com/McRipper/trestle-auth-otp)              [![RubyGemsLogo]](https://rubygems.org/gems/trestle-auth-otp)                    |
 
 
 ## License
 
 The gem is available as open source under the terms of the [LGPLv3 License](https://opensource.org/licenses/LGPL-3.0).
+
+[GitHubLogo]: https://github.githubassets.com/favicons/favicon.png
+[RubyGemsLogo]: https://rubygems.org/favicon.ico
+
+<style>
+  table img { width: 15px; }
+</style>

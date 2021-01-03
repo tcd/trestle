@@ -11,17 +11,34 @@ module Trestle
       include Hook::Helpers
 
       # Whitelisted helpers will concatenate their result to the output buffer when called.
-      WHITELISTED_HELPERS = [:row, :col, :render, :tab, :table, :divider, :h1, :h2, :h3, :h4, :h5, :h6, :card, :panel, :well]
+      WHITELISTED_HELPERS = [
+        :row,
+        :col,
+        :render,
+        :tab,
+        :table,
+        :divider,
+        :h1,
+        :h2,
+        :h3,
+        :h4,
+        :h5,
+        :h6,
+        :card,
+        :panel,
+        :well,
+      ].freeze()
 
       # Raw block helpers will pass their block argument directly to the method without wrapping it in a new output buffer.
-      RAW_BLOCK_HELPERS = [:table, :toolbar]
+      RAW_BLOCK_HELPERS = [:table, :toolbar].freeze()
 
       # The #select and #display methods are defined on Kernel. Undefine them so
       # that they can be delegated to the form builder or template by method_missing.
-      undef_method :select, :display
+      undef_method(:select, :display)
 
-      delegate :concat, to: :output_buffer
+      delegate(:concat, to: :output_buffer)
 
+      # @return [void]
       def initialize(template, form=nil)
         @template = template
         @form = form || @template.form
@@ -58,11 +75,15 @@ module Trestle
         end
       end
 
+      # @param name [Symbol]
+      # @param include_all [Boolean]
+      # @return [Boolean]
       def respond_to_missing?(name, include_all=false)
         @form.respond_to?(name, include_all) ||
           @template.respond_to?(name, include_all) ||
           super
       end
+
     end
   end
 end

@@ -1,8 +1,15 @@
 module Trestle
   class Table
     class ActionsColumn
-      attr_reader :toolbar, :options
 
+      attr_reader :toolbar
+
+      attr_reader :options
+
+      # @param options [Hash]
+      # @param &block [Proc]
+      #
+      # @return [void]
       def initialize(options={}, &block)
         @options = options
         @toolbar = Toolbar.new(ActionsBuilder)
@@ -20,37 +27,73 @@ module Trestle
 
       def default_actions
         ->(toolbar, instance, admin) do
-          toolbar.delete if admin && admin.actions.include?(:destroy)
+          toolbar.delete if admin&.actions&.include?(:destroy)
         end
       end
 
       class ActionsBuilder < Toolbar::Builder
-        attr_reader :instance, :admin
 
+        attr_reader :instance
+
+        attr_reader :admin
+
+        # @param template [Doc::Unknown]
+        # @param instance [Doc::Unknown]
+        # @param admin [Admin]
+        #
+        # @return [void]
         def initialize(template, instance, admin)
           super(template)
-
-          @instance, @admin = instance, admin
+          @instance = instance
+          @admin    = admin
         end
 
+        # @return [Trestle::Toolbar::Link]
         def show
-          link(t("buttons.show", default: "Show"), instance, admin: admin, action: :show, icon: "fa fa-info", style: :info)
+          link(
+            t("buttons.show", default: "Show"),
+            instance,
+            admin: admin,
+            action: :show,
+            icon: "fa fa-info",
+            style: :info,
+          )
         end
 
+        # @return [Trestle::Toolbar::Link]
         def edit
-          link(t("buttons.edit", default: "Edit"), instance, admin: admin, action: :edit, icon: "fa fa-pencil", style: :warning)
+          link(
+            t("buttons.edit", default: "Edit"),
+            instance,
+            admin: admin,
+            action: :edit,
+            icon: "fa fa-pencil",
+            style: :warning,
+          )
         end
 
+        # @return [Trestle::Toolbar::Link]
         def delete
-          link(t("buttons.delete", default: "Delete"), instance, admin: admin, action: :destroy, method: :delete, icon: "fa fa-trash", style: :danger, data: { toggle: "confirm-delete", placement: "left" })
+          link(
+            t("buttons.delete", default: "Delete"),
+            instance,
+            admin: admin,
+            action: :destroy,
+            method: :delete,
+            icon: "fa fa-trash",
+            style: :danger,
+            data: { toggle: "confirm-delete", placement: "left" },
+          )
         end
 
-        builder_method :show, :edit, :delete
+        builder_method(:show, :edit, :delete)
 
         # Disallow button tags within the actions toolbar. Alias to link for backwards compatibility.
         alias button link
 
-      private
+        private
+
+        # @return [String]
         def translate(key, options={})
           if admin
             admin.translate(key, options)
@@ -58,7 +101,9 @@ module Trestle
             I18n.t(:"admin.#{key}", options)
           end
         end
+
         alias t translate
+
       end
 
       class Renderer < Column::Renderer
@@ -74,6 +119,7 @@ module Trestle
           @template.render_toolbar(@column.toolbar, instance, @table.admin)
         end
       end
+
     end
   end
 end

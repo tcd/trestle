@@ -13,14 +13,17 @@ module Trestle
           end
         end
 
+        # @return [Boolean]
         def custom?
           options[:custom] != false
         end
 
+        # @return [String]
         def choose_file_text
           I18n.t("trestle.file.choose_file", default: "Choose file...")
         end
 
+        # @return [String]
         def browse_text
           I18n.t("trestle.file.browse", default: "Browse")
         end

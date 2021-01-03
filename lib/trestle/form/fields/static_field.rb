@@ -2,8 +2,10 @@ module Trestle
   class Form
     module Fields
       class StaticField < Field
+
         attr_reader :value
 
+        # @return [void]
         def initialize(builder, template, name, value=nil, options={}, &block)
           if value.is_a?(Hash)
             @value, options = nil, value
@@ -14,6 +16,7 @@ module Trestle
           super(builder, template, name, options, &block)
         end
 
+        # @return [Doc::HTML]
         def field
           if block
             template.capture(&block)
@@ -25,6 +28,7 @@ module Trestle
         def default_value
           builder.object.send(name) if builder.object
         end
+
       end
     end
   end

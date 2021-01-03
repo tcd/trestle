@@ -9,6 +9,8 @@ module Trestle
     autoload :SequelAdapter
 
     # Creates a new Adapter class with the given modules mixed in
+    # @param *modules [Array]
+    # @return [Trestle::Adapters::Adapter]
     def self.compose(*modules)
       Class.new(Adapter) do
         modules.each { |mod| include(mod) }

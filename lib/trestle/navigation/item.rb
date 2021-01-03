@@ -1,17 +1,35 @@
 module Trestle
   class Navigation
     class Item
-      attr_reader :name, :path, :options
 
+      # @return [Symbol,String]
+      attr_reader :name
+
+      # @return [Doc::Unknown]
+      attr_reader :path
+
+      # @return [Hash]
+      attr_reader :options
+
+      # @param name [Symbol,String]
+      # @param path [Doc::Unknown]
+      # @param options [Hash]
+      # @option options [Symbol,Integer] :priority
+      #
+      # @return [void]
       def initialize(name, path=nil, options={})
-        @name, @path, @options = name, path, options
+        @name    = name
+        @path    = path
+        @options = options
       end
 
+      # @return [Boolean]
       def ==(other)
         other.is_a?(self.class) && name == other.name && path == other.path
       end
       alias eql? ==
 
+      # @return [Integer]
       def hash
         [name, path].hash
       end
@@ -72,6 +90,7 @@ module Trestle
       class Badge
         attr_reader :text
 
+        # @return [void]
         def initialize(options)
           case options
           when Hash
